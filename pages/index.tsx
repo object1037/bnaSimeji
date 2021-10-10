@@ -14,6 +14,14 @@ const Home: NextPage = () => {
     setPron(inputValue)
   }
 
+  const formStyle = [
+    'mt-16',
+    'flex',
+    'justify-center',
+    'space-x-3',
+    'max-w-md',
+    'mx-auto'
+  ]
   const buttonStyle = [
     'bg-gray-900',
     'text-gray-100',
@@ -41,7 +49,7 @@ const Home: NextPage = () => {
         <meta property="og:image" content="https://object1037.dev/_next/image?url=%2Fimages%2Fprofile.jpg&w=640&q=75" />
       </Head>
       <main className="px-6">
-        <form onSubmit={submitHandler} className="mt-16 flex justify-center space-x-3 max-w-md mx-auto">
+        <form onSubmit={submitHandler} className={clsx(formStyle)}>
           <input
             aria-label="search kaomoji"
             type="text"
