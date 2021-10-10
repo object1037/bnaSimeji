@@ -5,9 +5,11 @@ import SearchResult from '../components/searchResult'
 
 const Home: NextPage = () => {
   const [pron, setPron] = useState('')
+  const [inputValue, setInputValue] = useState('')
 
-  async function submitHandler() {
-
+  async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setPron(inputValue)
   }
 
   return (
@@ -28,12 +30,12 @@ const Home: NextPage = () => {
           <input
             aria-label="search kaomoji"
             type="text"
-            value={pron}
-            onChange={(e) => setPron(e.target.value)}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
           />
           <button type="submit">検索</button>
         </form>
-        <SearchResult />
+        {pron && <SearchResult pron={pron}/>}
       </main>
     </>
   )
