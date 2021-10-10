@@ -9,6 +9,10 @@ const SearchResult = memo(function SearchResult({
  }) {
   const { kaomojis, isLoading, isError } = useKaomojis(pron)
 
+  const clickHandler = (text: string) => {
+    navigator.clipboard.writeText(text)
+  }
+
   const resultsWrapperStyle = [
     'border-t',
     'border-gray-300',
@@ -29,7 +33,10 @@ const SearchResult = memo(function SearchResult({
     'w-full',
     'md:w-1/2',
     'border-b',
-    'border-gray-300'
+    'border-gray-300',
+    'cursor-pointer',
+    'hover:bg-gray-100',
+    'transition'
   ]
   const infoStyle = [
     'py-4',
@@ -62,7 +69,7 @@ const SearchResult = memo(function SearchResult({
         {kaomojis!.length === 0 ? noResult : 
         kaomojis!.map((kaomoji) => {
           return (
-            <div key={kaomoji.word} className={clsx(listStyle)}>
+            <div key={kaomoji.word} className={clsx(listStyle)} onClick={() => clickHandler(kaomoji.word)}>
               {kaomoji.word}
             </div>
           )
