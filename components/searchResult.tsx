@@ -7,8 +7,20 @@ const SearchResult = memo(function SearchResult({
   pron: string
  }) {
   const { kaomojis, isLoading, isError } = useKaomojis(pron)
+  if (isLoading) {
+    return null
+  }
+  if (isError) {
+    return <p>エラー</p>
+  }
   return (
-    <div>aa</div>
+    <div>
+      <ul>
+        {kaomojis!.map((kaomoji) => {
+          return <li key={kaomoji.word}>{kaomoji.word}</li>
+        })}
+      </ul>
+    </div>
   )
 })
 
