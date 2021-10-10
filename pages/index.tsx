@@ -15,7 +15,6 @@ const Home: NextPage = () => {
   }
 
   const formStyle = [
-    'mt-16',
     'flex',
     'justify-center',
     'space-x-3',
@@ -53,12 +52,14 @@ const Home: NextPage = () => {
         <meta property="og:image" content="https://object1037.dev/_next/image?url=%2Fimages%2Fprofile.jpg&w=640&q=75" />
       </Head>
       <main className="px-6 pb-6">
+        <h1 className="text-center text-3xl font-bold my-10">ぶなしめじ</h1>
         <form onSubmit={submitHandler} className={clsx(formStyle)}>
           <input
             aria-label="search kaomoji"
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            placeholder="もち"
             className="rounded-md flex-grow dark:bg-gray-800"
           />
           <button type="submit" className={clsx(buttonStyle)}>
