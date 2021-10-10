@@ -45,6 +45,8 @@ const SearchResult = memo(function SearchResult({
     'py-4',
     'text-center',
     'border-b',
+    'border-gray-300',
+    'dark:border-gray-600',
     'text-gray-500',
     'dark:text-gray-400',
     'w-full'

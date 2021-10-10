@@ -6,8 +6,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (Array.isArray(pron)) {
     return res.status(400).json({ message: "bad query" })
-  } else if (!pron.match(/^[ぁ-んー　]*$/)) {
-    return res.status(400).json({ message: "ひらがなを入力してください" })
+  } else if (!pron.match(/^[ぁ-んー　]*$/) || pron.length < 2) {
+    return res.status(400).json({ message: "bad input" })
   }
 
   const encoded = encodeURI(`https://cloud.simeji.me/py?ol=1&switch=2&section=1&ver=10.6&api_version=2&web=1&py=${pron}`)
