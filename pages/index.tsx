@@ -24,14 +24,18 @@ const Home: NextPage = () => {
   ]
   const buttonStyle = [
     'bg-gray-900',
+    'dark:bg-gray-100',
     'text-gray-100',
+    'dark:text-gray-900',
     'rounded-md',
     'border',
     'border-gray-900',
+    'dark:border-gray-100',
     'p-3',
     'text-xl',
     'hover:bg-transparent',
     'hover:text-gray-900',
+    'dark:hover:text-gray-100',
     'transition'
   ]
 
@@ -55,7 +59,7 @@ const Home: NextPage = () => {
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            className="rounded-md flex-grow"
+            className="rounded-md flex-grow dark:bg-gray-800"
           />
           <button type="submit" className={clsx(buttonStyle)}>
             <FiSearch />

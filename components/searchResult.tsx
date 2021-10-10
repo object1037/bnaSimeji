@@ -16,6 +16,7 @@ const SearchResult = memo(function SearchResult({
   const resultsWrapperStyle = [
     'border-t',
     'border-gray-300',
+    'dark:border-gray-600',
     'my-12',
     'flex',
     'max-w-3xl',
@@ -34,8 +35,10 @@ const SearchResult = memo(function SearchResult({
     'md:w-1/2',
     'border-b',
     'border-gray-300',
+    'dark:border-gray-600',
     'cursor-pointer',
     'hover:bg-gray-100',
+    'dark:hover:bg-gray-800',
     'transition'
   ]
   const infoStyle = [
@@ -43,6 +46,7 @@ const SearchResult = memo(function SearchResult({
     'text-center',
     'border-b',
     'text-gray-500',
+    'dark:text-gray-400',
     'w-full'
   ]
 
