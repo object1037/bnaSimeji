@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (!res.data.data) {
         return null
       } else {
-        const filtered = res.data.data[0].candidates.filter((kaomoji: kaomoji) => kaomoji.type == 9)
+        const filtered = res.data.data[0].candidates.filter((kaomoji: kaomoji) => (kaomoji.type == 9 || kaomoji.type === 10))
         return filtered
       }
     })

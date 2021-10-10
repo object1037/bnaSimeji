@@ -52,7 +52,7 @@ const Home: NextPage = () => {
         <meta property="og:description" content="Webで顔文字変換" />
         <meta property="og:image" content="https://object1037.dev/_next/image?url=%2Fimages%2Fprofile.jpg&w=640&q=75" />
       </Head>
-      <main className="px-6">
+      <main className="px-6 pb-6">
         <form onSubmit={submitHandler} className={clsx(formStyle)}>
           <input
             aria-label="search kaomoji"
