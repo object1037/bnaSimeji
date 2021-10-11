@@ -19,7 +19,9 @@ const SearchResult = memo(function SearchResult({
     'dark:border-gray-600',
     'my-12',
     'flex',
-    'max-w-3xl',
+    'max-w-xl',
+    'md:max-w-3xl',
+    'lg:max-w-4xl',
     'mx-auto',
   ]
   const listWrapperStyle = [
@@ -33,6 +35,7 @@ const SearchResult = memo(function SearchResult({
     'py-4',
     'w-full',
     'md:w-1/2',
+    'lg:w-1/3',
     'border-b',
     'border-gray-300',
     'dark:border-gray-600',
