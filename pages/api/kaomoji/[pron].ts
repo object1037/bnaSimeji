@@ -10,18 +10,31 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: "bad input" })
   }
 
-  const encoded = encodeURI(`https://cloud.simeji.me/py?ol=1&switch=2&section=1&ver=10.6&api_version=2&web=1&py=${pron}`)
+  let filtered: kaomoji[] = []
 
-  try {
-    const results = await axios.get<any>(encoded)
+  function fetcher(section: number): any {
+    const encoded = encodeURI(`https://cloud.simeji.me/py?ol=1&switch=2&section=${section}&ver=10.6&api_version=2&web=1&py=${pron}`)
+    return axios.get<any>(encoded)
     .then(function(res) {
       if (!res.data.data) {
         return null
-      } else {
-        const filtered = res.data.data[0].candidates.filter((kaomoji: kaomoji) => (kaomoji.type == 9 || kaomoji.type === 10))
+      }
+
+      filtered = filtered.concat(res.data.data[0].candidates.filter((kaomoji: kaomoji) => (kaomoji.type == 9 || kaomoji.type === 10)))
+
+      if (res.data.data[0].continue) {
+        return fetcher(section + 1)
+      } else if (!res.data.data[0].continue) {
         return filtered
       }
     })
+    .catch(function() {
+      return filtered
+    })
+  }
+
+  try {
+    const results = await fetcher(1)
     if (!results) return res.status(400).json({ message: "顔文字が見つかりません" })
     return res.json(results)
   } catch (e: any) {
