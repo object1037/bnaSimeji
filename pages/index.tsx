@@ -62,7 +62,7 @@ const Home: NextPage = () => {
             placeholder="もち"
             className="rounded-md flex-grow dark:bg-gray-800"
           />
-          <button type="submit" className={clsx(buttonStyle)}>
+          <button type="submit" className={clsx(buttonStyle)} aria-label="検索">
             <FiSearch />
           </button>
         </form>
@@ -74,6 +74,7 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="p-4 text-2xl hover:text-gray-400 dark:hover:text-gray-500 transition"
+          aria-label="GitHubのリポジトリ"
         >
           <FiGithub />
         </a>
