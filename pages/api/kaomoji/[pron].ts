@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { pron } = req.query
@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   let filtered: kaomoji[] = []
 
-  function fetcher(section: number): any {
+  const fetcher = async (section: number): Promise<null | kaomoji[] | undefined> => {
     const encoded = encodeURI(`https://cloud.simeji.me/py?ol=1&switch=2&section=${section}&ver=10.6&api_version=2&web=1&py=${pron}`)
     return axios.get<any>(encoded)
     .then(function(res) {
