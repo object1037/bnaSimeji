@@ -1,6 +1,7 @@
 import { useKaomojis } from "../lib/swr-hooks"
 import { memo } from "react"
 import clsx from "clsx"
+import { KaomojiBox } from "./kaomojiBox"
 
 const SearchResult = memo(function SearchResult({
   pron
@@ -8,10 +9,6 @@ const SearchResult = memo(function SearchResult({
   pron: string
  }) {
   const { kaomojis, isLoading, isError } = useKaomojis(pron)
-
-  const clickHandler = (text: string) => {
-    navigator.clipboard.writeText(text)
-  }
 
   const resultsWrapperStyle = [
     'border-t',
@@ -28,21 +25,6 @@ const SearchResult = memo(function SearchResult({
     'w-full',
     'flex',
     'flex-wrap'
-  ]
-  const listStyle = [
-    'truncate',
-    'px-3',
-    'py-4',
-    'w-full',
-    'md:w-1/2',
-    'lg:w-1/3',
-    'border-b',
-    'border-gray-300',
-    'dark:border-gray-600',
-    'cursor-pointer',
-    'hover:bg-gray-100',
-    'dark:hover:bg-gray-800',
-    'transition'
   ]
   const infoStyle = [
     'py-4',
@@ -78,9 +60,7 @@ const SearchResult = memo(function SearchResult({
         {kaomojis!.length === 0 ? noResult : 
         kaomojis!.map((kaomoji) => {
           return (
-            <div key={kaomoji.word} className={clsx(listStyle)} onClick={() => clickHandler(kaomoji.word)}>
-              {kaomoji.word}
-            </div>
+            <KaomojiBox kaomoji={kaomoji} key={kaomoji.word} />
           )
         })}
       </div>
