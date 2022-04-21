@@ -1,84 +1,10 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import { useState } from 'react'
-import SearchResult from '../components/searchResult'
-import { FiSearch, FiGithub } from 'react-icons/fi'
-import clsx from 'clsx'
+import { SearchForm } from '../components/searchForm'
 
 const Home: NextPage = () => {
-  const [pron, setPron] = useState('')
-  const [inputValue, setInputValue] = useState('')
-
-  async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setPron(inputValue)
-  }
-
-  const formStyle = [
-    'flex',
-    'justify-center',
-    'space-x-3',
-    'max-w-md',
-    'mx-auto'
-  ]
-  const buttonStyle = [
-    'bg-gray-900',
-    'dark:bg-gray-100',
-    'text-gray-100',
-    'dark:text-gray-900',
-    'rounded-md',
-    'border',
-    'border-gray-900',
-    'dark:border-gray-100',
-    'p-3',
-    'text-xl',
-    'hover:bg-transparent',
-    'hover:text-gray-900',
-    'dark:hover:text-gray-100',
-    'transition'
-  ]
-
   return (
     <>
-      <Head>
-        <title>ぶなしめじ</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta name="description" content="Webで顔文字変換" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:creator" content="@object1037" />
-        <meta property="og:url" content="https://bnasimeji.vercel.app" />
-        <meta property="og:title" content="ぶなしめじ" />
-        <meta property="og:description" content="Webで顔文字変換" />
-        <meta property="og:image" content="https://object1037.dev/_next/image?url=%2Fimages%2Fprofile.jpg&w=640&q=75" />
-      </Head>
-      <main className="px-6">
-        <h1 className="text-center text-3xl font-bold my-10">ぶなしめじ</h1>
-        <form onSubmit={submitHandler} className={clsx(formStyle)}>
-          <input
-            aria-label="search kaomoji"
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="もち"
-            className="rounded-md flex-grow dark:bg-gray-800"
-          />
-          <button type="submit" className={clsx(buttonStyle)} aria-label="検索">
-            <FiSearch />
-          </button>
-        </form>
-        {pron && <SearchResult pron={pron}/>}
-      </main>
-      <footer className="mt-auto bg-gray-100 dark:bg-gray-800 flex justify-center">
-        <a 
-          href="https://github.com/object1037/bnaSimeji"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="p-4 text-2xl hover:text-gray-400 dark:hover:text-gray-500 transition"
-          aria-label="GitHubのリポジトリ"
-        >
-          <FiGithub />
-        </a>
-      </footer>
+    <SearchForm pron='' />
     </>
   )
 }
