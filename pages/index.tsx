@@ -1,7 +1,6 @@
-import type { NextPage } from 'next'
 import { SearchForm } from '../components/searchForm'
 
-const Home: NextPage = () => {
+const Home = () => {
   return (
     <>
     <SearchForm pron='' />

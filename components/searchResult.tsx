@@ -1,15 +1,12 @@
-import { useKaomojis } from "../lib/swr-hooks"
 import { memo } from "react"
 import clsx from "clsx"
 import { KaomojiBox } from "./kaomojiBox"
 
 const SearchResult = memo(function SearchResult({
-  pron
+  kaomojis
  }: {
-  pron: string
+  kaomojis: kaomoji[]
  }) {
-  const { kaomojis, isLoading, isError } = useKaomojis(pron)
-
   const resultsWrapperStyle = [
     'border-t',
     'border-gray-300',
@@ -37,13 +34,14 @@ const SearchResult = memo(function SearchResult({
     'w-full'
   ]
 
-  if (isLoading) {
+  if (!kaomojis) {
     return (
       <div className={clsx(resultsWrapperStyle)}>
         <p className={clsx(infoStyle)}>Loading...</p>
       </div>
     )
   }
+  /*
   if (isError) {
     return (
       <div className={clsx(resultsWrapperStyle)}>
@@ -51,7 +49,7 @@ const SearchResult = memo(function SearchResult({
       </div>
     )
   }
-
+*/
   const noResult = <p className={clsx(infoStyle)}>見つかりません …ﾄﾎﾎ( ×ω× ;)</p>
 
   return (
