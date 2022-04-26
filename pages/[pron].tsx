@@ -13,7 +13,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       kaomojis: res.kaomojis ? res.kaomojis : null,
       message: res.message ? res.message : null
-    }
+    },
+    revalidate: 3600,
   }
 }
 
