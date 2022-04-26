@@ -9,9 +9,19 @@
 }
 
 #nprogress .bar {
-  background: black;
+  background: #111827;
 }
 
 #nprogress .peg {
-  box-shadow: 0 0 10px black, 0 0 5px black;
+  box-shadow: 0 0 10px #111827, 0 0 5px #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  #nprogress .bar {
+    background: #f3f4f6;
+  }
+  
+  #nprogress .peg {
+    box-shadow: 0 0 10px #f3f4f6, 0 0 5px #f3f4f6;
+  }
 }
