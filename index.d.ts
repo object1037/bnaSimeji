@@ -7,3 +7,13 @@ interface kaomoji {
   type: number
   word: string
 }
+
+interface simejiResponse {
+  cache: 0 | 1
+  data: {
+    hira: string
+    cache_time: number
+    candidates: kaomoji[]
+    continue: 0 | 1
+  }[]
+}

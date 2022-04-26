@@ -7,3 +7,11 @@
   flex-direction: column;
   min-height: 100%;
 }
+
+#nprogress .bar {
+  background: black;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px black, 0 0 5px black;
+}

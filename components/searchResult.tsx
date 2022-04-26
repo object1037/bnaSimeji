@@ -1,12 +1,16 @@
 import { memo } from "react"
 import clsx from "clsx"
 import { KaomojiBox } from "./kaomojiBox"
+import { useRouter } from "next/router"
 
 const SearchResult = memo(function SearchResult({
-  kaomojis
+  kaomojis,
+  message
  }: {
-  kaomojis: kaomoji[]
+  kaomojis: kaomoji[] | null
+  message: string | null
  }) {
+  const { isFallback } = useRouter()
   const resultsWrapperStyle = [
     'border-t',
     'border-gray-300',
@@ -34,29 +38,32 @@ const SearchResult = memo(function SearchResult({
     'w-full'
   ]
 
-  if (!kaomojis) {
+  if (isFallback) {
     return (
       <div className={clsx(resultsWrapperStyle)}>
         <p className={clsx(infoStyle)}>Loading...</p>
       </div>
     )
   }
-  /*
-  if (isError) {
+  if (message === "kaomoji not found") {
+    return (
+      <div className={clsx(resultsWrapperStyle)}>
+        <p className={clsx(infoStyle)}>見つかりません …ﾄﾎﾎ( ×ω× ;)</p>
+      </div>
+    )
+  }
+  if (message === "bad input") {
     return (
       <div className={clsx(resultsWrapperStyle)}>
         <p className={clsx(infoStyle)}>ひらがな2文字以上で入力して乁(˙꒳˙乁)ｸﾚﾖ...</p>
       </div>
     )
   }
-*/
-  const noResult = <p className={clsx(infoStyle)}>見つかりません …ﾄﾎﾎ( ×ω× ;)</p>
 
   return (
     <div className={clsx(resultsWrapperStyle)}>
       <div className={clsx(listWrapperStyle)}>
-        {kaomojis!.length === 0 ? noResult : 
-        kaomojis!.map((kaomoji) => {
+        {kaomojis!.map((kaomoji) => {
           return (
             <KaomojiBox kaomoji={kaomoji} key={kaomoji.word} />
           )

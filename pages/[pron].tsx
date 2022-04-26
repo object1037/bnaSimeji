@@ -3,16 +3,16 @@ import { SearchForm } from '../components/searchForm'
 import SearchResult from '../components/searchResult'
 import { GetStaticProps } from 'next'
 import axios from 'axios'
+import { useEffect } from 'react'
+import NProgress from 'nprogress'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const result = await axios.get<kaomoji[]>(encodeURI(`https://bnasimeji.vercel.app/api/kaomoji/${params!.pron as string}`))
-    .then((res) => res)
-
-  const kaomojis = result.data
+  const res = await handler(params!.pron as string)
 
   return {
     props: {
-      kaomojis
+      kaomojis: res.kaomojis ? res.kaomojis : null,
+      message: res.message ? res.message : null
     }
   }
 }
@@ -25,19 +25,94 @@ export async function getStaticPaths() {
 }
 
 const PronPage = ({
-  kaomojis
+  kaomojis,
+  message
 }: {
-  kaomojis: kaomoji[]
+  kaomojis: kaomoji[] | null
+  message: string | null
 }) => {
   const router = useRouter()
   const { pron } = router.query
 
+  useEffect(() => {
+    NProgress.configure({ showSpinner: false })
+    const handleStart = () => {
+      NProgress.start()
+    }
+    const handleStop = () => {
+      NProgress.done()
+    }
+
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleStop)
+    router.events.on('routeChangeError', handleStop)
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleStop)
+      router.events.off('routeChangeError', handleStop)
+    }
+  }, [router])
+
   return (
     <>
     <SearchForm pron={pron as string} />
-    {pron && <SearchResult kaomojis={kaomojis}/>}
+    <SearchResult kaomojis={kaomojis} message={message} />
     </>
   )
+}
+
+const handler = async (pron: string) => {
+  if (Array.isArray(pron) || !pron.match(/^[ぁ-んー　]*$/) || pron.length < 2) {
+    return {
+      message: "bad input"
+    }
+  }
+
+  let filtered: kaomoji[] = []
+
+  const fetcher = async (section: number): Promise<{
+    kaomojis?: kaomoji[]
+    message?: string
+  }> => {
+    const encoded = encodeURI(`https://cloud.simeji.me/py?ol=1&switch=2&section=${section}&ver=10.7&api_version=2&web=1&py=${pron}`)
+    return axios.get<simejiResponse>(encoded)
+    .then((res) => {
+      if (!res.data.data) {
+        return {
+          message: "kaomoji not found"
+        }
+      }
+
+      filtered = filtered.concat(res.data.data[0].candidates.filter((kaomoji: kaomoji) => (kaomoji.type == 9 || kaomoji.type === 10)))
+
+      if (res.data.data[0].continue) {
+        return fetcher(section + 1)
+      } else {
+        return filtered.length === 0 ? {
+          message: "kaomoji not found"
+        } : {
+          kaomojis: filtered
+        }
+      }
+    })
+    .catch(() => {
+      return filtered.length === 0 ? {
+        message: "kaomoji not found"
+      } : {
+        kaomojis: filtered
+      }
+    })
+  }
+
+  try {
+    const results = await fetcher(1)
+    return results
+  } catch (e: any) {
+    return {
+      message: e.message as string
+    }
+  }
 }
 
 export default PronPage
