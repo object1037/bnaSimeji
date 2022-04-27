@@ -3,8 +3,6 @@ import { SearchForm } from '../components/searchForm'
 import SearchResult from '../components/searchResult'
 import { GetStaticProps } from 'next'
 import axios from 'axios'
-import { useEffect } from 'react'
-import NProgress from 'nprogress'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const res = await handler(params!.pron as string)
@@ -34,26 +32,6 @@ const PronPage = ({
 }) => {
   const router = useRouter()
   const { pron } = router.query
-
-  useEffect(() => {
-    NProgress.configure({ showSpinner: false })
-    const handleStart = () => {
-      NProgress.start()
-    }
-    const handleStop = () => {
-      NProgress.done()
-    }
-
-    router.events.on('routeChangeStart', handleStart)
-    router.events.on('routeChangeComplete', handleStop)
-    router.events.on('routeChangeError', handleStop)
-
-    return () => {
-      router.events.off('routeChangeStart', handleStart)
-      router.events.off('routeChangeComplete', handleStop)
-      router.events.off('routeChangeError', handleStop)
-    }
-  }, [router])
 
   return (
     <>
