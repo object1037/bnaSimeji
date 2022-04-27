@@ -51,11 +51,16 @@ const SearchResult = memo(function SearchResult({
         <p className={clsx(infoStyle)}>見つかりません …ﾄﾎﾎ( ×ω× ;)</p>
       </div>
     )
-  }
-  if (message === "bad input") {
+  } else if (message === "bad input") {
     return (
       <div className={clsx(resultsWrapperStyle)}>
         <p className={clsx(infoStyle)}>ひらがな2文字以上で入力して乁(˙꒳˙乁)ｸﾚﾖ...</p>
+      </div>
+    )
+  } else if (message) {
+    return (
+      <div className={clsx(resultsWrapperStyle)}>
+        <p className={clsx(infoStyle)}>Error: {message}</p>
       </div>
     )
   }
