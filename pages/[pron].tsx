@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { SearchForm } from '../components/searchForm'
-import SearchResult from '../components/searchResult'
+import { SearchResult } from '../components/searchResult'
 import { GetStaticProps } from 'next'
 import axios from 'axios'
 
@@ -63,7 +63,7 @@ const handler = async (pron: string) => {
         }
       }
 
-      filtered = filtered.concat(res.data.data[0].candidates.filter((kaomoji: kaomoji) => (kaomoji.type == 9 || kaomoji.type === 10)))
+      filtered = filtered.concat(res.data.data[0].candidates.filter((kaomoji: kaomoji) => (kaomoji.type === 9 || kaomoji.type === 10)))
 
       if (res.data.data[0].continue) {
         return fetcher(section + 1)

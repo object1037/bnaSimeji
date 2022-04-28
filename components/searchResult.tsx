@@ -1,15 +1,14 @@
-import { memo } from "react"
 import clsx from "clsx"
 import { KaomojiBox } from "./kaomojiBox"
 import { useRouter } from "next/router"
 
-const SearchResult = memo(function SearchResult({
+export const SearchResult = ({
   kaomojis,
   message
  }: {
   kaomojis: kaomoji[] | null
   message: string | null
- }) {
+ }) => {
   const { isFallback } = useRouter()
   const resultsWrapperStyle = [
     'border-t',
@@ -76,6 +75,4 @@ const SearchResult = memo(function SearchResult({
       </div>
     </div>
   )
-})
-
-export default SearchResult
+}
