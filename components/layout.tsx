@@ -18,7 +18,6 @@ export const Layout = ({
       <meta property="og:url" content="https://bnasimeji.vercel.app" />
       <meta property="og:title" content="ぶなしめじ" />
       <meta property="og:description" content="WebでSimejiの顔文字変換" />
-      <meta property="og:image" content="https://object1037.dev/_next/image?url=%2Fimages%2Fprofile.jpg&w=640&q=75" />
     </Head>
     <main className="px-6">
       <h1 className="text-center text-3xl font-bold my-10">ぶなしめじ</h1>
