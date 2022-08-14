@@ -19,8 +19,6 @@ export const KaomojiBox = ({
     'border-gray-300',
     'dark:border-gray-600',
     'cursor-pointer',
-    'hover:bg-gray-100',
-    'dark:hover:bg-gray-800',
     'transition'
   ]
 
@@ -35,8 +33,8 @@ export const KaomojiBox = ({
   }
 
   return (
-    <div className={clsx(listStyle)} onClick={() => clickHandler(kaomoji.word)}>
-      {copied ? 'コピー完了！( *¯ ꒳¯*)ﾌﾌﾝ' : kaomoji.word}
+    <div className={clsx(listStyle, copied ? 'bg-emerald-100 dark:bg-emerald-900' : 'hover:bg-gray-100 dark:hover:bg-gray-800')} onClick={() => clickHandler(kaomoji.word)}>
+      {copied ? <span className='text-emerald-700 dark:text-emerald-300'>コピー完了！( *¯ ꒳¯*)ﾌﾌﾝ</span> : kaomoji.word}
     </div>
   )
 }
