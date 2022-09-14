@@ -10,31 +10,14 @@ export const SearchResult = ({
   message: string | null
  }) => {
   const { isFallback } = useRouter()
-  const resultsWrapperStyle = [
-    'border-t',
-    'border-gray-300',
-    'dark:border-gray-600',
-    'my-12',
-    'flex',
-    'max-w-xl',
-    'md:max-w-3xl',
-    'lg:max-w-4xl',
-    'mx-auto',
-  ]
-  const listWrapperStyle = [
-    'w-full',
-    'flex',
-    'flex-wrap'
-  ]
+  const resultsWrapperStyle = ['my-12', 'max-w-4xl', 'mx-auto']
+  const listWrapperStyle = ['w-full', 'flex', 'flex-wrap', 'gap-4']
   const infoStyle = [
     'py-4',
     'text-center',
-    'border-b',
-    'border-gray-300',
-    'dark:border-gray-600',
-    'text-gray-500',
-    'dark:text-gray-400',
-    'w-full'
+    'text-stone-500',
+    'dark:text-stone-400',
+    'w-full',
   ]
 
   if (isFallback) {

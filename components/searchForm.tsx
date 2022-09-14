@@ -21,23 +21,20 @@ export const SearchForm = ({
     'justify-center',
     'space-x-3',
     'max-w-md',
-    'mx-auto'
+    'mx-auto',
+    'relative',
   ]
   const buttonStyle = [
-    'bg-gray-900',
-    'dark:bg-gray-100',
-    'text-gray-100',
-    'dark:text-gray-900',
-    'rounded-md',
-    'border',
-    'border-gray-900',
-    'dark:border-gray-100',
-    'p-3',
+    'absolute',
+    'aspect-square',
+    'text-center',
     'text-xl',
-    'hover:bg-transparent',
-    'hover:text-gray-900',
-    'dark:hover:text-gray-100',
-    'transition'
+    'rounded-full',
+    'hover:bg-stone-200',
+    'dark:hover:bg-stone-700',
+    'right-0',
+    'inset-y-0',
+    'transition',
   ]
 
   return (
@@ -47,11 +44,13 @@ export const SearchForm = ({
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder={pron ? pron : "もち"}
-        className="rounded-md flex-grow dark:bg-gray-800"
+        placeholder={pron ? pron : 'もち'}
+        className="p-4 rounded-full bg-stone-100 border-transparent focus:border-stone-200 dark:focus:border-stone-700 focus:ring-0 flex-grow dark:bg-stone-800"
       />
       <button type="submit" className={clsx(buttonStyle)} aria-label="検索">
-        <FiSearch />
+        <span className="flex justify-center">
+          <FiSearch />
+        </span>
       </button>
     </form>
   )
