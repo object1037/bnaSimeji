@@ -1,11 +1,7 @@
 import clsx from "clsx"
 import { useState } from "react"
 
-export const KaomojiBox = ({
-  kaomoji
-}: {
-  kaomoji: kaomoji
-}) => {
+export const KaomojiBox = ({ kaomoji }: { kaomoji: string }) => {
   const [copied, setCopied] = useState(false)
 
   const listStyle = [
@@ -32,11 +28,8 @@ export const KaomojiBox = ({
   }
 
   return (
-    <button
-      className={clsx(listStyle)}
-      onClick={() => clickHandler(kaomoji.word)}
-    >
-      {kaomoji.word}
+    <button className={clsx(listStyle)} onClick={() => clickHandler(kaomoji)}>
+      {kaomoji}
     </button>
   )
 }

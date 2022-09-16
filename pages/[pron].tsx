@@ -2,15 +2,16 @@ import { useRouter } from 'next/router'
 import { SearchForm } from '../components/searchForm'
 import { SearchResult } from '../components/searchResult'
 import { GetStaticProps } from 'next'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+
+export type APIResponse = { kaomojis: string[] } | { message: string }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await handler(params!.pron as string)
+  const res = await handler(params && params.pron)
 
   return {
     props: {
-      kaomojis: res.kaomojis ? res.kaomojis : null,
-      message: res.message ? res.message : null
+      data: res,
     },
     revalidate: 3600,
   }
@@ -19,79 +20,71 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true
+    fallback: true,
   }
 }
 
-const PronPage = ({
-  kaomojis,
-  message
-}: {
-  kaomojis: kaomoji[] | null
-  message: string | null
-}) => {
+const PronPage = ({ data }: { data: APIResponse }) => {
   const router = useRouter()
   const { pron } = router.query
 
+  if (router.isFallback) {
+    return <SearchForm pron="Loading..." />
+  } else if (!pron || Array.isArray(pron)) {
+    return <SearchForm pron="Bad URL" />
+  }
+
   return (
     <>
-    <SearchForm pron={pron as string} />
-    <SearchResult kaomojis={kaomojis} message={message} />
+      <SearchForm pron={pron} />
+      <SearchResult data={data} />
     </>
   )
 }
 
-const handler = async (pron: string) => {
-  if (Array.isArray(pron) || !pron.match(/^[ぁ-んー　]*$/) || pron.length < 2) {
+const handler = async (pron: string | string[] | undefined) => {
+  if (
+    !pron ||
+    Array.isArray(pron) ||
+    !pron.match(/^[ぁ-んー　]*$/) ||
+    pron.length < 2
+  ) {
     return {
-      message: "bad input"
+      message: 'bad input',
     }
   }
 
-  let filtered: kaomoji[] = []
-
-  const fetcher = async (section: number): Promise<{
-    kaomojis?: kaomoji[]
-    message?: string
-  }> => {
-    const encoded = encodeURI(`https://cloud.simeji.me/py?ol=1&switch=2&section=${section}&ver=10.7&api_version=2&web=1&py=${pron}`)
-    return axios.get<simejiResponse>(encoded)
+  const endPoint = encodeURI(
+    `https://cloud.simeji.me/py?ol=1&switch=2&section=0&ver=10.7&api_version=2&web=1&py=${pron}`
+  )
+  const simejiRes: Promise<APIResponse> = axios
+    .get<simejiResponse>(endPoint)
     .then((res) => {
       if (!res.data.data) {
         return {
-          message: "kaomoji not found"
+          message: 'kaomoji not found',
         }
       }
+      const filtered = res.data.data[0].candidates
+        .filter((kaomoji: kaomoji) => kaomoji.type === 9 || kaomoji.type === 10)
+        .map((kaomoji) => kaomoji.word)
 
-      filtered = filtered.concat(res.data.data[0].candidates.filter((kaomoji: kaomoji) => (kaomoji.type === 9 || kaomoji.type === 10)))
+      const kaomojis = [...Array.from(new Set(filtered))]
 
-      if (res.data.data[0].continue) {
-        return fetcher(section + 1)
-      } else {
-        return filtered.length === 0 ? {
-          message: "kaomoji not found"
-        } : {
-          kaomojis: filtered
-        }
-      }
+      return kaomojis.length === 0
+        ? {
+            message: 'kaomoji not found',
+          }
+        : {
+            kaomojis: kaomojis,
+          }
     })
-    .catch(() => {
-      return filtered.length === 0 ? {
-        message: "kaomoji not found"
-      } : {
-        kaomojis: filtered
-      }
+    .catch((e: Error | AxiosError) => {
+      return { message: e.message }
     })
-  }
 
-  try {
-    const results = await fetcher(1)
-    return results
-  } catch (e: any) {
-    return {
-      message: e.message as string
-    }
-  }
+  const results = await simejiRes
+  return results
 }
 
 export default PronPage
