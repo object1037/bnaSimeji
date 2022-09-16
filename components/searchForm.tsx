@@ -1,11 +1,12 @@
 import { FiSearch } from 'react-icons/fi'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
 
 export const SearchForm = ({ pron }: { pron: string }) => {
   const router = useRouter()
   const [inputValue, setInputValue] = useState('')
+  const inputEl = useRef<HTMLInputElement>(null)
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -37,10 +38,12 @@ export const SearchForm = ({ pron }: { pron: string }) => {
     <form onSubmit={submitHandler} className={clsx(formStyle)}>
       <input
         autoFocus
+        ref={inputEl}
         aria-label="search kaomoji"
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        onBlur={() => setTimeout(() => inputEl.current?.focus(), 2500)}
         placeholder={pron ? pron : 'もち'}
         className="p-4 rounded-full bg-stone-100 border-transparent focus:border-stone-200 dark:focus:border-stone-700 focus:ring-0 flex-grow dark:bg-stone-800"
       />
