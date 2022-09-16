@@ -9,7 +9,7 @@ export const SearchForm = ({ pron }: { pron: string }) => {
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    router.push(`/${inputValue}`)
+    router.push(`/${inputValue}`).then(() => setInputValue(''))
   }
 
   const formStyle = [
