@@ -36,6 +36,7 @@ export const SearchForm = ({ pron }: { pron: string }) => {
   return (
     <form onSubmit={submitHandler} className={clsx(formStyle)}>
       <input
+        autoFocus
         aria-label="search kaomoji"
         type="text"
         value={inputValue}
