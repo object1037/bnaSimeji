@@ -1,5 +1,5 @@
-import clsx from "clsx"
-import { KaomojiBox } from "./kaomojiBox"
+import clsx from 'clsx'
+import { KaomojiBox } from './kaomojiBox'
 import { APIResponse } from '../pages/[pron]'
 
 export const SearchResult = ({ data }: { data: APIResponse }) => {

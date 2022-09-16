@@ -1,5 +1,5 @@
-import clsx from "clsx"
-import { useState } from "react"
+import clsx from 'clsx'
+import { useState } from 'react'
 
 export const KaomojiBox = ({ kaomoji }: { kaomoji: string }) => {
   const [copied, setCopied] = useState(false)

@@ -3,11 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
 
-export const SearchForm = ({
-  pron
-}: {
-  pron: string
-}) => {
+export const SearchForm = ({ pron }: { pron: string }) => {
   const router = useRouter()
   const [inputValue, setInputValue] = useState('')
 

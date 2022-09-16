@@ -2,8 +2,8 @@ import 'nprogress/nprogress.css'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Layout } from '../components/layout'
-import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import NProgress from 'nprogress'
 
 function MyApp({ Component, pageProps }: AppProps) {

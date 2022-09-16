@@ -2,11 +2,7 @@ import Head from 'next/head'
 import { ReactNode } from 'react'
 import { FiGithub } from 'react-icons/fi'
 
-export const Layout = ({
-  children
-}: {
-  children: ReactNode
-}) => {
+export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Head>
