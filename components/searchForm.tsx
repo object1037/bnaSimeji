@@ -8,9 +8,17 @@ export const SearchForm = ({ pron }: { pron: string }) => {
   const [inputValue, setInputValue] = useState('')
   const inputEl = useRef<HTMLInputElement>(null)
 
-  async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     router.push(`/${inputValue}`).then(() => setInputValue(''))
+  }
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value
+    setInputValue(input)
+    if (input.match(/^[ぁ-んー]{2,}$/)) {
+      router.prefetch(`/${input}`)
+    }
   }
 
   const formStyle = [
@@ -42,7 +50,7 @@ export const SearchForm = ({ pron }: { pron: string }) => {
         aria-label="search kaomoji"
         type="text"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={changeHandler}
         pattern="^[ぁ-んー]{2,}$"
         onBlur={() => setTimeout(() => inputEl.current?.focus(), 2500)}
         placeholder={pron ? pron : 'もち'}
