@@ -43,12 +43,7 @@ const PronPage = ({ data }: { data: APIResponse }) => {
 }
 
 const handler = async (pron: string | string[] | undefined) => {
-  if (
-    !pron ||
-    Array.isArray(pron) ||
-    !pron.match(/^[ぁ-んー　]*$/) ||
-    pron.length < 2
-  ) {
+  if (!pron || Array.isArray(pron) || !pron.match(/^[ぁ-んー]{2,}$/)) {
     return {
       message: 'bad input',
     }
