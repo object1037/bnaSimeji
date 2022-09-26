@@ -9,7 +9,7 @@ const Home = () => {
         <ol className="list-disc list-inside my-6 space-y-2">
           <li>
             変換したい単語を<span className="font-bold">ひらがな2文字以上</span>
-            で入力し、検索する
+            (またはそう変換できるローマ字) で入力し、検索する
           </li>
           <li>出てきた結果をクリックするとクリップボードにコピーできるよ</li>
         </ol>
