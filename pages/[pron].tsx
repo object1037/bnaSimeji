@@ -3,6 +3,7 @@ import { SearchForm } from '../components/searchForm'
 import { SearchResult } from '../components/searchResult'
 import { GetStaticProps } from 'next'
 import axios, { AxiosError } from 'axios'
+import { toHiragana } from '@koozaki/romaji-conv'
 
 export type APIResponse = { kaomojis: string[] } | { message: string }
 
@@ -43,14 +44,20 @@ const PronPage = ({ data }: { data: APIResponse }) => {
 }
 
 const handler = async (pron: string | string[] | undefined) => {
-  if (!pron || Array.isArray(pron) || !pron.match(/^[ぁ-んー]{2,}$/)) {
+  if (!pron || Array.isArray(pron)) {
+    return {
+      message: 'bad input',
+    }
+  }
+  const convertedPron = toHiragana(pron)
+  if (!convertedPron.match(/^[ぁ-んー]{2,}$/)) {
     return {
       message: 'bad input',
     }
   }
 
   const endPoint = encodeURI(
-    `https://cloud.simeji.me/py?ol=1&switch=2&section=0&ver=10.7&api_version=2&web=1&py=${pron}`
+    `https://cloud.simeji.me/py?ol=1&switch=2&section=0&ver=10.7&api_version=2&web=1&py=${convertedPron}`
   )
   const simejiRes: Promise<APIResponse> = axios
     .get<simejiResponse>(endPoint)
