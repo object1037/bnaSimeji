@@ -11,11 +11,19 @@ export const KaomojiBox = ({ kaomoji }: { kaomoji: string }) => {
     'px-4',
     'rounded-full',
     'border',
-    copied ? 'border-emerald-400' : 'border-stone-200',
-    'hover:bg-stone-100',
-    copied ? 'border-emerald-500' : 'dark:border-stone-700',
-    'dark:hover:bg-stone-700',
     'transition',
+  ]
+  const defaultStyle = [
+    'border-stone-200',
+    'dark:border-stone-700',
+    'hover:bg-stone-100',
+    'dark:hover:bg-stone-700',
+  ]
+  const copiedStyle = [
+    'border-emerald-400',
+    'dark:border-emerald-500',
+    'bg-emerald-100',
+    'dark:bg-emerald-900',
   ]
 
   const clickHandler = (text: string) => {
@@ -28,7 +36,10 @@ export const KaomojiBox = ({ kaomoji }: { kaomoji: string }) => {
   }
 
   return (
-    <button className={clsx(listStyle)} onClick={() => clickHandler(kaomoji)}>
+    <button
+      className={clsx(listStyle, copied ? copiedStyle : defaultStyle)}
+      onClick={() => clickHandler(kaomoji)}
+    >
       {kaomoji}
     </button>
   )

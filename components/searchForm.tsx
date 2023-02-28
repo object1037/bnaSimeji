@@ -53,7 +53,6 @@ export const SearchForm = ({ pron }: { pron: string }) => {
         type="text"
         value={inputValue}
         onChange={changeHandler}
-        onBlur={() => setTimeout(() => inputEl.current?.focus(), 2500)}
         placeholder={pron ? pron : 'もち'}
         className="p-4 rounded-full bg-stone-100 border-transparent focus:border-stone-200 dark:focus:border-stone-700 focus:ring-0 flex-grow dark:bg-stone-800"
       />
